@@ -1,6 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -Wextra
-OBJS = main.o input_buffer.o statement.o
+OBJS = main.o input_buffer.o statement.o row.o table.o
+
+.PHONY: db clean
 
 db: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(OBJS)
