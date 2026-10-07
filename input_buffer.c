@@ -12,7 +12,7 @@ InputBuffer* new_input_buffer(void) {
 }
 
 void print_prompt(void) {
-    printf("lalala > ");
+    printf("db > ");
 }
 
 void read_input(InputBuffer* input_buffer) {
