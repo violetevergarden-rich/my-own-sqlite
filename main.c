@@ -1,6 +1,8 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "input_buffer.h"
+#include "table.h"
 #include "statement.h"
 #include "metacommand.h"
 

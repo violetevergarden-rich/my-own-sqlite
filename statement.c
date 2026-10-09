@@ -1,6 +1,14 @@
 #include "statement.h"
+#include "input_buffer.h"
+#include "table.h"
+#include "row.h"
+#include "pager.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
+#define ROWS_PER_PAGE (PAGE_SIZE / ROW_SIZE)
+#define TABLE_MAX_ROWS (ROWS_PER_PAGE * TABLE_MAX_PAGES)
 
 PrepareResult prepare_insert(InputBuffer* input_buffer, Statement* statement) {
   statement->type = STATEMENT_INSERT;

@@ -4,7 +4,7 @@
 #include <sys/types.h>
 #include <stddef.h>
 
-typedef struct {
+typedef struct InputBuffer_t {
     char* buffer;
     size_t buffer_length;
     ssize_t input_length;

@@ -1,4 +1,6 @@
 #include "table.h"
+#include "row.h"
+#include "pager.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -6,6 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+
+#define ROWS_PER_PAGE (PAGE_SIZE / ROW_SIZE)
 
 Table* db_open(const char* filename) {
   Pager* pager = pager_open(filename);

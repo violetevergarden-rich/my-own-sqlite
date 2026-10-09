@@ -1,4 +1,5 @@
 #include "metacommand.h"
+#include "input_buffer.h"
 #include "table.h"
 #include <string.h>
 #include <stdio.h>

@@ -1,9 +1,10 @@
 #ifndef STATEMENT_H
 #define STATEMENT_H
 
-#include "input_buffer.h"
-#include "table.h"
-#include "row.h" 
+#include "row.h"
+
+typedef struct InputBuffer_t InputBuffer;
+typedef struct Table_t Table;
 
 typedef enum { 
     PREPARE_SUCCESS, 
@@ -23,7 +24,7 @@ typedef enum {
     STATEMENT_SELECT 
 } StatementType;
 
-typedef struct {
+typedef struct Statement_t {
     StatementType type;
     Row row_to_insert; //只被insert语句使用
 } Statement;
