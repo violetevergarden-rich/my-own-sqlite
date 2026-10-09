@@ -6,6 +6,7 @@
 
 #define PAGE_SIZE 4096
 #define TABLE_MAX_PAGES 100
+#define ROWS_PER_PAGE (PAGE_SIZE / ROW_SIZE)
 
 typedef struct Pager_t {
   int file_descriptor;

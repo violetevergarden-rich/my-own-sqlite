@@ -5,12 +5,13 @@
 
 typedef struct Pager_t Pager;
 
+#define TABLE_MAX_ROWS (ROWS_PER_PAGE * TABLE_MAX_PAGES)
+
 typedef struct Table_t {
   uint32_t num_rows;
   Pager* pager;
 } Table;
 
-void* row_slot(Table* table, uint32_t row_num);
 Table* db_open(const char* filename);
 void db_close(Table* table);
 

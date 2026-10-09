@@ -9,8 +9,6 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#define ROWS_PER_PAGE (PAGE_SIZE / ROW_SIZE)
-
 Table* db_open(const char* filename) {
   Pager* pager = pager_open(filename);
   uint32_t num_rows = pager->file_length / ROW_SIZE;
@@ -69,14 +67,4 @@ void db_close(Table* table) {
 
     free(pager);
     free(table);
-}
-
-void* row_slot(Table* table, uint32_t row_num) {
-    uint32_t page_num = row_num / ROWS_PER_PAGE;
-    void* page = get_page(table->pager, page_num);
-
-    uint32_t row_offset = row_num % ROWS_PER_PAGE;
-    uint32_t byte_offset = row_offset * ROW_SIZE;
-
-    return page + byte_offset;
 }

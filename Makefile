@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra
-OBJS = main.o input_buffer.o statement.o row.o table.o pager.o metacommand.o
+OBJS = main.o input_buffer.o statement.o row.o table.o pager.o metacommand.o cursor.o
 
 .PHONY: db clean
 

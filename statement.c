@@ -3,12 +3,11 @@
 #include "table.h"
 #include "row.h"
 #include "pager.h"
+#include "cursor.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define ROWS_PER_PAGE (PAGE_SIZE / ROW_SIZE)
-#define TABLE_MAX_ROWS (ROWS_PER_PAGE * TABLE_MAX_PAGES)
 
 PrepareResult prepare_insert(InputBuffer* input_buffer, Statement* statement) {
   statement->type = STATEMENT_INSERT;
@@ -58,9 +57,13 @@ ExecuteResult execute_insert(Statement* statement, Table* table) {
   }
 
   Row* row_to_insert = &(statement->row_to_insert);
+  Cursor* cursor = table_end(table);
 
-  serialize_row(row_to_insert, row_slot(table, table->num_rows));
-  table->num_rows ++;
+  serialize_row(row_to_insert, cursor_value(cursor));
+  table->num_rows++;
+  cursor_advance(cursor);
+
+  free(cursor);
 
   return EXECUTE_SUCCESS;
 }
@@ -69,10 +72,17 @@ ExecuteResult execute_select(Statement* statement, Table* table) {
   (void)statement;
 
   Row row;
-  for (uint32_t i = 0; i < table->num_rows; i++) {
-    deserialize_row(row_slot(table, i), &row);
+  
+  Cursor* cursor = table_start(table);
+
+  while(!(cursor->end_of_table)){
+    deserialize_row(cursor_value(cursor), &row);
     print_row(&row);
+    cursor_advance(cursor);
   }
+
+  free(cursor);
+
   return EXECUTE_SUCCESS;
 }
 
