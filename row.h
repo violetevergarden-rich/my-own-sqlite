@@ -28,7 +28,7 @@ typedef struct Row_t {
 #define ROW_SIZE (ID_SIZE + USERNAME_SIZE + EMAIL_SIZE)
 
 // 序列化和反序列化
-void serialize_row(Row* source, void* destination);
+void serialize_row(const Row* source, void* destination);
 void deserialize_row(void* source, Row* destination);
 void print_row(Row* row);
 
