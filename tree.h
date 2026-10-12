@@ -5,7 +5,10 @@
 
 #include "row.h"
 #include "pager.h"
-#include "cursor.h"
+typedef struct Cursor_t Cursor;
+typedef struct Table_t Table;
+
+
 
 typedef enum { 
     NODE_INTERNAL,
@@ -46,5 +49,6 @@ void initialize_leaf_node(void* node);
 void leaf_node_insert(Cursor* cursor, uint32_t key, const Row* value);
 void print_constants();
 void print_leaf_node(void* node);
+Cursor* leaf_node_find(Table* table, uint32_t page_num, uint32_t key);
 
 #endif // TREE_H

@@ -25,6 +25,7 @@ void* leaf_node_value(void* node, uint32_t cell_num) {
 }
 
 void initialize_leaf_node(void* node) {
+    set_node_type(node, NODE_LEAF);
     *leaf_node_num_cells(node) = 0;
 }
 
@@ -53,6 +54,39 @@ void leaf_node_insert(Cursor* cursor, uint32_t key, const Row* value) {
     *(leaf_node_key(node, cursor->cell_num)) = key;
     // 将结构体 Row 序列化并写入对应的 Value 内存区
     serialize_row(value, leaf_node_value(node, cursor->cell_num));
+}
+
+Cursor* leaf_node_find(Table* table, uint32_t page_num, uint32_t key){
+    void* node = get_page(table->pager, page_num);
+    uint32_t num_cells = *leaf_node_num_cells(node);
+
+    Cursor* cursor = malloc(sizeof(Cursor));
+    cursor->table = table;
+    cursor->page_num = page_num;
+
+    // 二叉搜索
+
+    uint32_t left_index = 0;
+    uint32_t right_index = num_cells;
+
+    while(left_index < right_index){
+        uint32_t index = left_index + (right_index - left_index)/2;
+        uint32_t key_at_index = *(leaf_node_key(node,index));
+
+        if(key_at_index == key){
+            cursor->cell_num = index;
+            return cursor;
+        }
+        else if(key_at_index < key){
+            left_index = index + 1;
+        }
+        else{
+            right_index = index;
+        }
+    }
+
+    cursor->cell_num = right_index;
+    return cursor;
 }
 
 void print_constants(){
